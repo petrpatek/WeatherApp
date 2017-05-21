@@ -44,7 +44,8 @@ var Weather = React.createClass({
         latitude: data.lat,
         longitude: data.lng,
         isLoading: false,
-        address: data.address
+        address: data.address,
+        noCoords: false
       });
       //error callback
     },function(error){
