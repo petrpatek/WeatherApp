@@ -1,22 +1,58 @@
 var React = require('react');
+
 var WeatherForm = require('WeatherForm');
 var WeatherMessage = require('WeatherMessage');
 var openWeatherMap = require('openWeatherMap');
 var ErrorModal = require('ErrorModal');
 var Mappings = require('Mappings');
 var WeatherProvider = require('WeatherProvider');
+var googleGeocode = require('googleGeocode');
 
 
 var Weather = React.createClass({
   getInitialState: function(){
     return {
       isLoading: false,
-      weather: "wi wi-day-sunny",
       noCoords: false
     }
   },
-  handleSearch: function(location){
+
+  getLocationFromCoords: function (latitude,longitude) {
     var that = this;
+    googleGeocode.getAddress(latitude,longitude).then(function (data) {
+      that.setState({
+        isLoading: false,
+        address: data
+      });
+    }, function(error) {
+      that.setState({
+        isLoading: false,
+        errorMessage: error.message
+      });
+    });
+  },
+
+  getCoordsFromLocation: function (location) {
+    var that = this;
+    googleGeocode.getCoords(location).then(function (data){
+      //success callback
+      that.setState({
+        location: location,
+        latitude: data.lat,
+        longitude: data.lng,
+        isLoading: false,
+        address: data.address
+      });
+      //error callback
+    },function(error){
+      that.setState({
+        isLoading: false,
+        errorMessage: error.message
+      });
+    });
+  },
+
+  handleSearch: function(location){
 
     this.setState({
       isLoading: true,
@@ -27,55 +63,10 @@ var Weather = React.createClass({
       weather: undefined
     });
 
-    openWeatherMap.getTempWithLocation(location).then(function (data){
-      //success callback
-      that.setState({
-        location: location,
-        temp: data.temp,
-        id: data.id,
-        isLoading: false,
-        weather: Mappings[data.id],
-        name: data.name
-      });
-      //error callback
-    },function(error){
-      that.setState({
-        isLoading: false,
-        errorMessage: error.message
-      });
-    });
+    this.getCoordsFromLocation(location);
 
   },
-  // handleCoords: function (latitude,longitude) {
-  //   var that = this;
-  //
-  //   this.setState({
-  //     isLoading: true,
-  //     errorMessage: undefined,
-  //     location: undefined,
-  //     temp: undefined,
-  //     id: undefined,
-  //     weather: undefined,
-  //     name: undefined
-  //   });
-  //
-  //   openWeatherMap.getTempWithCoords(latitude,longitude).then(function (data){
-  //     //success callback
-  //     that.setState({
-  //       temp: data.temp,
-  //       id: data.id,
-  //       isLoading: false,
-  //       weather: Mappings[data.id],
-  //       name: data.name
-  //     });
-  //     //error callback
-  //   },function(error){
-  //     that.setState({
-  //       isLoading: false,
-  //       errorMessage: error.message
-  //     });
-  //   });
-  // },
+  
   componentDidMount: function () {
     var location = this.props.location.query.location;
     var that = this;
@@ -87,12 +78,14 @@ var Weather = React.createClass({
 
     navigator.geolocation.getCurrentPosition(function(position) {
       console.log(position);
+      var latitude = position.coords.latitude;
+      var longitude = position.coords.longitude;
       that.setState({
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude
+        latitude,
+        longitude
       });
-      // var {latitude,longitude} = that.state;
-      // that.handleCoords(latitude,longitude);
+
+      that.getLocationFromCoords(latitude,longitude);
 
     }, function(err) {
       console.log(err);
@@ -102,8 +95,9 @@ var Weather = React.createClass({
     });
 
   },
+
   render: function () {
-    var {isLoading, errorMessage, latitude, longitude, noCoords} = this.state;
+    var {isLoading, errorMessage, latitude, longitude, noCoords, address} = this.state;
     var that = this;
 
     function renderWeatherProvider () {
@@ -126,6 +120,10 @@ var Weather = React.createClass({
       if (noCoords){
         return (
           <WeatherForm onSearch={that.handleSearch}/>
+        )
+      } else {
+        return (
+          <p className="text-center">Your location: {address}</p>
         )
       }
     }

@@ -11,6 +11,7 @@ var Nav = (props) => {
         </div>
         <div className="top-bar-right">
           <ul className="menu">
+            <li><Link to="/settings">Settings</Link></li>
             <li><Link to="/login">Login</Link></li>
             <li><Link to="/register">Register</Link></li>
           </ul>

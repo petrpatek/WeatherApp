@@ -101,6 +101,40 @@ a.ui-state-default {
   visibility: hidden;
 }
 
+.settings-list {
+  li {
+    list-style-type: none;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    border: 1px solid $yell;
+    margin-bottom: 5px;
+    justify-content: center;
+  }
+}
+
+.settings-icon {
+  font-size: 2rem;
+}
+
+.tp {
+  height: 100%;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tp-on {
+  background-color: green;
+}
+
+.tp-off {
+  background-color: red;
+}
+
+
+
 #remember, #terms {
   display: inline-block;
   margin-left: 1rem;
