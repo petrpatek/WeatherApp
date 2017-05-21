@@ -4,13 +4,15 @@ var WeatherMessage = require('WeatherMessage');
 var openWeatherMap = require('openWeatherMap');
 var ErrorModal = require('ErrorModal');
 var Mappings = require('Mappings');
+var WeatherProvider = require('WeatherProvider');
 
 
 var Weather = React.createClass({
   getInitialState: function(){
     return {
       isLoading: false,
-      weather: "wi wi-day-sunny"
+      weather: "wi wi-day-sunny",
+      noCoords: false
     }
   },
   handleSearch: function(location){
@@ -44,36 +46,36 @@ var Weather = React.createClass({
     });
 
   },
-  handleCoords: function (latitude,longitude) {
-    var that = this;
-
-    this.setState({
-      isLoading: true,
-      errorMessage: undefined,
-      location: undefined,
-      temp: undefined,
-      id: undefined,
-      weather: undefined,
-      name: undefined
-    });
-
-    openWeatherMap.getTempWithCoords(latitude,longitude).then(function (data){
-      //success callback
-      that.setState({
-        temp: data.temp,
-        id: data.id,
-        isLoading: false,
-        weather: Mappings[data.id],
-        name: data.name
-      });
-      //error callback
-    },function(error){
-      that.setState({
-        isLoading: false,
-        errorMessage: error.message
-      });
-    });
-  },
+  // handleCoords: function (latitude,longitude) {
+  //   var that = this;
+  //
+  //   this.setState({
+  //     isLoading: true,
+  //     errorMessage: undefined,
+  //     location: undefined,
+  //     temp: undefined,
+  //     id: undefined,
+  //     weather: undefined,
+  //     name: undefined
+  //   });
+  //
+  //   openWeatherMap.getTempWithCoords(latitude,longitude).then(function (data){
+  //     //success callback
+  //     that.setState({
+  //       temp: data.temp,
+  //       id: data.id,
+  //       isLoading: false,
+  //       weather: Mappings[data.id],
+  //       name: data.name
+  //     });
+  //     //error callback
+  //   },function(error){
+  //     that.setState({
+  //       isLoading: false,
+  //       errorMessage: error.message
+  //     });
+  //   });
+  // },
   componentDidMount: function () {
     var location = this.props.location.query.location;
     var that = this;
@@ -89,8 +91,8 @@ var Weather = React.createClass({
         latitude: position.coords.latitude,
         longitude: position.coords.longitude
       });
-      var {latitude,longitude} = that.state;
-      that.handleCoords(latitude,longitude);
+      // var {latitude,longitude} = that.state;
+      // that.handleCoords(latitude,longitude);
 
     }, function(err) {
       console.log(err);
@@ -101,13 +103,14 @@ var Weather = React.createClass({
 
   },
   render: function () {
-    var {isLoading, temp, name, errorMessage, weather, latitude, longitude,noCoords} = this.state
+    var {isLoading, errorMessage, latitude, longitude, noCoords} = this.state;
     var that = this;
-    function renderMessage(){
-      if (isLoading){
-        return <h3>Fetching weather...</h3>
-      } else if (temp && name){
-        return <WeatherMessage temp={temp} location={name} weather={weather}/>;
+
+    function renderWeatherProvider () {
+      if (isLoading) {
+        return <h3 className="text-center">Loading Location</h3>
+      } else if (latitude && longitude) {
+        return <WeatherProvider latitude={latitude} longitude={longitude}/>
       }
     }
 
@@ -129,8 +132,7 @@ var Weather = React.createClass({
 
     return (
       <section>
-        <h1 className="text-center page-title">Weather Component</h1>
-        {renderMessage()}
+        {renderWeatherProvider()}
         {renderError()}
         {renderForm()}
       </section>

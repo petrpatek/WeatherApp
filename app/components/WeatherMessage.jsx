@@ -4,7 +4,7 @@ var WeatherMessage = ({temp, location, weather}) => {
     return (
       <section>
         <p className="text-center icon-wrapper"><i className={weather}></i></p>
-        <h3 className="text-center">It's {Math.round(temp)}°C in {location}</h3>
+        <h3 className="text-center">{Math.round(temp)}°C</h3>
       </section>
     );
 }
