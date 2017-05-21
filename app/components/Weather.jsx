@@ -22,7 +22,10 @@ var Weather = React.createClass({
     googleGeocode.getAddress(latitude,longitude).then(function (data) {
       that.setState({
         isLoading: false,
-        address: data
+        address: data,
+        latitude,
+        longitude,
+        noCoords: false
       });
     }, function(error) {
       that.setState({
@@ -66,7 +69,7 @@ var Weather = React.createClass({
     this.getCoordsFromLocation(location);
 
   },
-  
+
   componentDidMount: function () {
     var location = this.props.location.query.location;
     var that = this;
