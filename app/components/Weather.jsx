@@ -7,13 +7,34 @@ var ErrorModal = require('ErrorModal');
 var Mappings = require('Mappings');
 var WeatherProvider = require('WeatherProvider');
 var googleGeocode = require('googleGeocode');
+var Storage = require('Storage');
 
 
 var Weather = React.createClass({
   getInitialState: function(){
-    return {
-      isLoading: false,
-      noCoords: true
+
+    var providers = Storage.getProviders();
+    var providersArray = []
+    if (providers) {
+
+      for (var key in providers) {
+        if (providers.hasOwnProperty(key)) {
+          if (providers[key]) {
+            providersArray.push(key);
+          }
+        }
+      }
+      return {
+        isLoading: false,
+        noCoords: true,
+        providersArray
+      }
+    } else {
+      return {
+        isLoading: false,
+        noCoords: true,
+        providersArray: ['owm']
+      }
     }
   },
 
@@ -82,7 +103,7 @@ var Weather = React.createClass({
     var error = localStorage.getItem('gps_error');
     if (!(error === "true")) {
       navigator.geolocation.getCurrentPosition(function(position) {
-        console.log(position);
+        // console.log(position);
         var latitude = position.coords.latitude;
         var longitude = position.coords.longitude;
         that.setState({
@@ -103,16 +124,33 @@ var Weather = React.createClass({
   },
 
   render: function () {
-    var {isLoading, errorMessage, latitude, longitude, noCoords, address} = this.state;
+    var {isLoading, errorMessage, latitude, longitude, noCoords, address,providersArray} = this.state;
     var that = this;
+    var key = 1;
 
-    function renderWeatherProvider () {
+
+    function renderWeatherProvider (provider) {
       if (isLoading) {
         return <h3 className="text-center">Loading Location</h3>
-      } else if (latitude && longitude) {
-        return <WeatherProvider latitude={latitude} longitude={longitude}/>
+      } else if (latitude && longitude && provider) {
+        return <WeatherProvider key={key++} latitude={latitude} longitude={longitude} provider={provider}/>
       }
     }
+
+    var renderProviders = () => {
+      if (providersArray.length === 0) {
+        return (
+          <h3 className="text-center">Select a weather provider in settings</h3>
+        );
+      } else {
+        console.log(providersArray, providersArray.length);
+        return providersArray.map((provider) => {
+          var p = renderWeatherProvider(provider);
+          console.log('PROVIDER:', provider, p);
+          return renderWeatherProvider(provider);
+        });
+      }
+    };
 
     function renderError () {
       if (typeof errorMessage === 'string') {
@@ -129,14 +167,14 @@ var Weather = React.createClass({
         )
       } else {
         return (
-          <p className="text-center">Your location: {address}</p>
+          <h3 className="text-center clear-float">Your location: {address}</h3>
         )
       }
     }
 
     return (
-      <section>
-        {renderWeatherProvider()}
+      <section className="centertext">
+        {renderProviders()}
         {renderError()}
         {renderForm()}
       </section>

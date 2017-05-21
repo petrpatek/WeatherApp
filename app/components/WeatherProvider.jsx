@@ -1,7 +1,9 @@
 var React = require('react');
 var WeatherMessage = require('WeatherMessage');
 var openWeatherMap = require('openWeatherMap');
+var Apixu = require('Apixu');
 var Mappings = require('Mappings');
+var Wunderground = require('Wunderground');
 
 var WeatherProvider = React.createClass({
   getInitialState: function () {
@@ -14,6 +16,19 @@ var WeatherProvider = React.createClass({
 
   handleCoords: function (latitude,longitude) {
     var that = this;
+    console.log('CONSOLE:', this.props.provider);
+    var provider = function () {
+      switch(that.props.provider) {
+        case 'owm':
+          return openWeatherMap;
+        case 'apixu':
+          return Apixu;
+        case 'wunderground':
+          return Wunderground;
+        default:
+          return openWeatherMap;
+      }
+    }
 
     this.setState({
       isLoading: true,
@@ -24,13 +39,13 @@ var WeatherProvider = React.createClass({
       weather: undefined,
     });
 
-    openWeatherMap.getWeather(latitude,longitude).then(function (data){
+    provider().getWeather(latitude,longitude).then(function (data){
       //success callback
       that.setState({
         temp: data.temp,
         id: data.id,
         isLoading: false,
-        weather: Mappings[data.id],
+        weather: Mappings[that.props.provider][data.id],
       });
       //error callback
     },function(error){
@@ -52,7 +67,12 @@ var WeatherProvider = React.createClass({
 
   render: function () {
 
-    var {isLoading, temp, weather} = this.state
+    var {isLoading, temp, weather} = this.state;
+    var names = {
+      owm: "Open Weather Map",
+      apixu: "Apixu",
+      wunderground: "Wunderground"
+    }
 
     function renderMessage(){
       if (isLoading){
@@ -63,8 +83,8 @@ var WeatherProvider = React.createClass({
     }
 
     return (
-      <section>
-        <h3 className="text-center">Open Weather Map</h3>
+      <section className="weather-provider">
+        <h3 className="text-center">{names[this.props.provider]}</h3>
         {renderMessage()}
       </section>
     )

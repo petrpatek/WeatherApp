@@ -10,12 +10,12 @@ module.exports = {
     var requestUrl = `${GOOGLE_URL}&address=${encodedLocation}`;
 
     return axios.get(requestUrl).then(function(res){
-      console.log(res);
+      // console.log(res);
       var address = res.data.results[0].formatted_address;
       var lat = res.data.results[0].geometry.location.lat;
       var lng = res.data.results[0].geometry.location.lng;
-      console.log(lat);
-      console.log(lng);
+      // console.log(lat);
+      // console.log(lng);
       return {
         address: address,
         lat: lat,
@@ -30,12 +30,12 @@ module.exports = {
     var eLat = encodeURIComponent(lat);
     var eLng = encodeURIComponent(lng);
     var requestUrl = `${GOOGLE_URL}&latlng=${eLat},${eLng}&result_type=locality`;
-    console.log(eLat,eLng,requestUrl);
+    // console.log(eLat,eLng,requestUrl);
 
     return axios.get(requestUrl).then(function(res){
-      console.log(res);
+      // console.log(res);
       var address = res.data.results[0].formatted_address;
-      console.log(address);
+      // console.log(address);
       return address;
     }).catch(function () {
       throw new Error("Google couldn't find address for given coords.");

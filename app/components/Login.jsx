@@ -3,7 +3,7 @@ var {Link} = require('react-router');
 
 var Login = (props) => {
   return (
-    <div>
+    <div className="columns small-centered medium-6 large-6">
       <form>
         <label htmlFor="email">E-mail</label>
         <input id="email" type="email" name="email" placeholder="your e-mail" required/>

@@ -11,7 +11,8 @@ var Settings = React.createClass({
   } else {
     return {
       owm: true,
-      apixu: false
+      apixu: false,
+      wunderground: false
     }
   }
 
@@ -22,13 +23,13 @@ var Settings = React.createClass({
   },
 
   render: function () {
-    var {owm, apixu} = this.state;
+    var {owm, apixu, wunderground} = this.state;
 
     var classToggle = function (provider) {
       if (provider) {
-        return "tp tp-on"
+        return "tp-on"
       } else {
-        return "tp tp-off"
+        return "tp-off"
       }
     };
 
@@ -46,17 +47,23 @@ var Settings = React.createClass({
         </section>
         <section className="settings-list">
             <ul>
-              <li onClick={() => {this.setState({owm: !owm})}}>
+              <li onClick={() => {this.setState({owm: !owm})}} className={classToggle(owm)}>
                 <span className={classToggle(owm)}>
                   <i className={iconToggle(owm)}></i>
                 </span>
                 Open Weather Map
               </li>
-              <li onClick={() => {this.setState({apixu: !apixu})}}>
+              <li onClick={() => {this.setState({apixu: !apixu})}} className={classToggle(apixu)}>
                 <span className={classToggle(apixu)}>
                   <i className={iconToggle(apixu)}></i>
                 </span>
                 Apixu
+              </li>
+              <li onClick={() => {this.setState({wunderground: !wunderground})}} className={classToggle(wunderground)}>
+                <span className={classToggle(wunderground)}>
+                  <i className={iconToggle(wunderground)}></i>
+                </span>
+                Wunderground
               </li>
             </ul>
         </section>

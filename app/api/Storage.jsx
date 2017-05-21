@@ -10,7 +10,7 @@ module.exports = {
 
     try {
       providers = JSON.parse(stringProviders);
-      console.log(providers);
+      // console.log(providers);
     } catch (error) {
       console.log(error);
     }

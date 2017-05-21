@@ -1,10 +1,3 @@
-// @font-face {
-//   font-family: 'weathericons';
-//   src: url('../../fonts/weathericons-regular-webfont.eot');
-//   src: url('../../fonts/weathericons-regular-webfont.eot?#iefix') format('embedded-opentype'), url('../../fonts/weathericons-regular-webfont.woff') format('woff'), url('../../fonts/weathericons-regular-webfont.ttf') format('truetype'), url('../../fonts/weathericons-regular-webfont.svg#weathericons-regular-webfontRg') format('svg');
-//   font-weight: normal;
-//   font-style: normal;
-// }
 
 $space-large: 2.5rem;
 $dark: #232323;
@@ -41,8 +34,8 @@ li>a:active, li>a:focus, li>a:hover {
 }
 
 .wi {
-  font-size: 15rem;
-  font-size: 20vw;
+  font-size: 10rem;
+  font-size: 15vw;
 }
 
 .icon-wrapper {
@@ -133,6 +126,26 @@ a.ui-state-default {
   background-color: red;
 }
 
+.weather-provider {
+  margin-top: 40px;
+  max-width: 33%;
+  justify-content: center;
+  display: inline-block;
+}
+
+
+.weather-message {
+  max-width: 100%;
+}
+
+.clear-float {
+  clear: both;
+  margin-top: 20px;
+}
+
+.centertext {
+  text-align: center;
+}
 
 
 #remember, #terms {
@@ -150,4 +163,11 @@ a.ui-state-default {
   display: inline-block;
   color: $dark;
   border: 2px solid $dark;
+}
+
+@media (max-width: 870px) {
+  .weather-provider {
+    display: block;
+    max-width: 100%;
+  }
 }

@@ -12,11 +12,11 @@ module.exports = {
     var requestUrl = `${OPEN_WEATHER_MAP_URL}&lat=${elat}&lon=${elon}`;
 
     return axios.get(requestUrl).then(function(res){
-      console.log(res);
+      // console.log(res);
       var temp = res.data.main.temp;
       var id = res.data.weather[0].id;
-      console.log(temp);
-      console.log(id);
+      // console.log(temp);
+      // console.log(id);
       return {
         temp: temp,
         id: id

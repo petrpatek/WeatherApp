@@ -20,7 +20,7 @@ var Register = React.createClass({
 
     render: function () {
       return (
-        <section>
+        <section className="columns small-centered medium-6 large-6">
           <form>
             <label htmlFor="email">E-mail <i className="fa fa-star" aria-hidden="true"></i></label>
 
