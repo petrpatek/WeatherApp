@@ -1,0 +1,119 @@
+// @font-face {
+//   font-family: 'weathericons';
+//   src: url('../../fonts/weathericons-regular-webfont.eot');
+//   src: url('../../fonts/weathericons-regular-webfont.eot?#iefix') format('embedded-opentype'), url('../../fonts/weathericons-regular-webfont.woff') format('woff'), url('../../fonts/weathericons-regular-webfont.ttf') format('truetype'), url('../../fonts/weathericons-regular-webfont.svg#weathericons-regular-webfontRg') format('svg');
+//   font-weight: normal;
+//   font-style: normal;
+// }
+
+$space-large: 2.5rem;
+$dark: #232323;
+$yell: #ffae00;
+
+
+body {
+  background-color: $dark;
+  color: white;
+}
+
+label {
+  color: white;
+  display: inline-block;
+}
+
+input {
+  box-shadow: none;
+}
+
+a:not(.ui-state-default) {
+  background-color: $dark;
+  color: $yell;
+  height: 100%;
+}
+
+a:hover {
+  color: #ee9d00;
+}
+
+li>a:active, li>a:focus, li>a:hover {
+  background-color: $yell;
+  color: $dark;
+}
+
+.wi {
+  font-size: 15rem;
+  font-size: 20vw;
+}
+
+.icon-wrapper {
+  margin: 5rem;
+}
+
+.main {
+  margin-top: $space-large;
+}
+.top-bar {
+  background-color: $dark;
+  padding: 0;
+}
+
+.top-bar ul {
+  background-color: $dark;
+}
+
+.button {
+display: block;
+}
+.page-title {
+  margin-top: $space-large;
+  margin-bottom: $space-large;
+}
+
+.fa-star {
+  color: $yell;
+}
+
+.menu>li>a {
+    padding: 1rem 1.5rem;
+}
+
+.forgotpass {
+  font-size: 0.8rem;
+}
+
+.callout.clearfix {
+  background-color: $dark;
+  border: none;
+  padding: 0;
+  margin-top: 1rem;
+}
+
+a.ui-state-default {
+  color: $dark;
+  font-weight: bold;
+}
+
+.ui-datepicker-prev {
+  visibility: hidden;
+}
+
+.ui-datepicker-next {
+  visibility: hidden;
+}
+
+#remember, #terms {
+  display: inline-block;
+  margin-left: 1rem;
+}
+
+#error-modal {
+  color: $dark;
+  background-color: $yell;
+  border: none;
+}
+
+#error-modal button {
+  display: inline-block;
+  color: $dark;
+  border: 2px solid $dark;
+}
