@@ -43,7 +43,7 @@ var Settings = React.createClass({
     return (
       <div>
         <section>
-            <h3 className="text-center">Choose your weather providers</h3>
+            <h3 className="text-center headings">Choose your weather providers</h3>
         </section>
         <section className="settings-list">
             <ul>

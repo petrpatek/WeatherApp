@@ -11,11 +11,11 @@ module.exports = {
     var requestUrl = `${WUNDERGROUND_URL}${elat},${elon}.json`;
 
     return axios.get(requestUrl).then(function(res){
-      console.log(res);
+      // console.log(res);
       var temp = res.data.current_observation.temp_c;
       var id = res.data.current_observation.icon;
-      console.log(temp);
-      console.log(id);
+      // console.log(temp);
+      // console.log(id);
       return {
         temp,
         id

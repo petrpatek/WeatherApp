@@ -12,16 +12,16 @@ module.exports = {
     var requestUrl = `${APIXU_URL}${elat},${elon}`;
 
     return axios.get(requestUrl).then(function(res){
-      console.log(res);
+      // console.log(res);
       var temp = res.data.current.temp_c;
       var icon = res.data.current.condition.icon;
 
       var matches = icon.match(/\d{3}/);
-      console.log('MATCHES', matches);
+      // console.log('MATCHES', matches);
       var id = Number(matches);
 
-      console.log('APIXU:', temp);
-      console.log('APIXU:', id);
+      // console.log('APIXU:', temp);
+      // console.log('APIXU:', id);
       return {
         temp,
         id

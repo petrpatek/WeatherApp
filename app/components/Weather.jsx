@@ -140,13 +140,13 @@ var Weather = React.createClass({
     var renderProviders = () => {
       if (providersArray.length === 0) {
         return (
-          <h3 className="text-center">Select a weather provider in settings</h3>
+          <h3 className="text-center headings">Select a weather provider in settings</h3>
         );
       } else {
-        console.log(providersArray, providersArray.length);
+        // console.log(providersArray, providersArray.length);
         return providersArray.map((provider) => {
           var p = renderWeatherProvider(provider);
-          console.log('PROVIDER:', provider, p);
+          // console.log('PROVIDER:', provider, p);
           return renderWeatherProvider(provider);
         });
       }
@@ -167,16 +167,16 @@ var Weather = React.createClass({
         )
       } else {
         return (
-          <h3 className="text-center clear-float">Your location: {address}</h3>
+          <h3 className="text-center headings">Your location: {address}</h3>
         )
       }
     }
 
     return (
       <section className="centertext">
+        {renderForm()}
         {renderProviders()}
         {renderError()}
-        {renderForm()}
       </section>
     );
   }

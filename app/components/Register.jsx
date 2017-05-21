@@ -49,10 +49,6 @@ var Register = React.createClass({
                 <label htmlFor="birthday">Your birthday</label>
                 <input id="birthday" type="text" name="birthday"/>
               </div>
-              {/* <div className="medium-6 column">
-                <label htmlFor="terms">Agree with terms</label>
-                <input id="terms" type="checkbox" name="terms" required/>
-              </div> */}
             </div>
 
             <div className="callout clearfix">

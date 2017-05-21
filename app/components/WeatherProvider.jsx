@@ -16,7 +16,7 @@ var WeatherProvider = React.createClass({
 
   handleCoords: function (latitude,longitude) {
     var that = this;
-    console.log('CONSOLE:', this.props.provider);
+    // console.log('CONSOLE:', this.props.provider);
     var provider = function () {
       switch(that.props.provider) {
         case 'owm':
