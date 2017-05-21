@@ -78,26 +78,27 @@ var Weather = React.createClass({
       this.handleSearch(location);
       window.location.hash = '#/';
     }
+    var error = localStorage.getItem('gps_error');
+    if (!(error === "true")) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        console.log(position);
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+        that.setState({
+          latitude,
+          longitude
+        });
 
-    navigator.geolocation.getCurrentPosition(function(position) {
-      console.log(position);
-      var latitude = position.coords.latitude;
-      var longitude = position.coords.longitude;
-      that.setState({
-        latitude,
-        longitude
+        that.getLocationFromCoords(latitude,longitude);
+
+      }, function(err) {
+        console.log(err);
+        localStorage.setItem('gps_error', "true");
+        that.setState({
+          noCoords: true
+        });
       });
-
-      that.getLocationFromCoords(latitude,longitude);
-
-    }, function(err) {
-      console.log(err);
-      localStorage.setItem('gps_error', 1);
-      that.setState({
-        noCoords: true
-      });
-    });
-
+    }
   },
 
   render: function () {
