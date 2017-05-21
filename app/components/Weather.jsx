@@ -13,7 +13,7 @@ var Weather = React.createClass({
   getInitialState: function(){
     return {
       isLoading: false,
-      noCoords: false
+      noCoords: true
     }
   },
 
@@ -92,6 +92,7 @@ var Weather = React.createClass({
 
     }, function(err) {
       console.log(err);
+      localStorage.setItem('gps_error', 1);
       that.setState({
         noCoords: true
       });
